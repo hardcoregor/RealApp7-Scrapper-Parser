@@ -1,27 +1,47 @@
 const puppeteer = require('puppeteer');
 
-// const url = '';
-
-
-const GetItems = async (searchPage) => {
-  const browser = await puppeteer.launch({ headless: false, defaultViewport: null });
+(async () => {
+  const browser = await puppeteer.launch({
+    headless: false,
+    defaultViewport: false,
+    userDataDir: "./tmp"
+  });
   const page = await browser.newPage();
 
-  await page.goto(`https://djinni.co/jobs/?keywords=react&all-keywords=&any-of-keywords=&exclude-keywords=&page=${searchPage}`);
+  await page.goto('https://www.amazon.com/s?rh=n%3A16225007011&fs=true&ref=lp_16225007011_sar');
+  // await page.goto('https://djinni.co/jobs/?keywords=react&all-keywords=&any-of-keywords=&exclude-keywords='); //DJINI
 
-  const itemList = await page.waitForSelector('div.d-flex.align-items-md-center.flex-column.flex-sm-row > div.list-jobs__title.list__title.order-1 > a')
-    .then(() => page.evaluate(() => { 
-      const ItemArray = [];
-      const ItemNodeList = document.querySelectorAll('div.d-flex.align-items-md-center.flex-column.flex-sm-row > div.list-jobs__title.list__title.order-1 > a');
-      ItemNodeList.forEach(item => {
-        const href = item.href;
-        ItemArray.push(item.href)
-      })
-      return ItemArray;
-    }))
-    .catch(() => console.log(`Selector Error`));
+  const productsHandles = await page.$$('div.s-main-slot.s-result-list.s-search-results.sg-row>.s-result-item');
+  // const productsHandles = await page.$$('div.col-sm-8.row-mobile-order-2'); // DJINI
 
-    console.log(itemList)
-};
+  let i = 0;
+  let items = [];
 
-GetItems(4);
+  for (const producthandle of productsHandles) {
+    let title = "Null";
+    let price = "Null";
+    let img = "Null";
+
+    try {
+      title = await page.evaluate(el => el.querySelector('h2 > a > span').textContent, producthandle);
+      // const title = await page.evaluate(el => el.querySelector('.profile').href, producthandle) // DJINI
+    } catch (error) { }
+
+    try {
+      price = await page.evaluate(el => el.querySelector('.a-price > .a-offscreen').textContent, producthandle);
+    } catch (error) { }
+
+    try {
+      img = await page.evaluate(el => el.querySelector('.s-image').getAttribute("src"), producthandle);
+    } catch (error) { }
+
+
+    if (title !== 'Null') {
+      items.push({ title, price, img })
+    }
+  }
+
+
+
+  console.log(items)
+})()
