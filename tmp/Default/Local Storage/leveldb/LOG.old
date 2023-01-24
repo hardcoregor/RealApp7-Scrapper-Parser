@@ -1,3 +1,4 @@
-2023/01/24-02:37:45.683 5570 Reusing MANIFEST E:\RealApp\RealApp7-Scrapper\Djini 3\tmp\Default\Local Storage\leveldb/MANIFEST-000001
-2023/01/24-02:37:45.684 5570 Recovering log #7
-2023/01/24-02:37:45.685 5570 Reusing old log E:\RealApp\RealApp7-Scrapper\Djini 3\tmp\Default\Local Storage\leveldb/000007.log 
+2023/01/25-01:23:19.144 5838 Reusing MANIFEST E:\RealApp\RealApp7-Scrapper\Djini 3\tmp\Default\Local Storage\leveldb/MANIFEST-000001
+2023/01/25-01:23:19.164 5838 Recovering log #9
+2023/01/25-01:23:19.165 5838 (ignoring error) E:\RealApp\RealApp7-Scrapper\Djini 3\tmp\Default\Local Storage\leveldb/000009.log: dropping 17645 bytes; Corruption: checksum mismatch
+2023/01/25-01:23:19.166 5838 Reusing old log E:\RealApp\RealApp7-Scrapper\Djini 3\tmp\Default\Local Storage\leveldb/000009.log 
